@@ -12,6 +12,7 @@ search_tool = TavilySearchResults(search_depth="basic")
 
 tools = [search_tool]
 
+
 agent = initialize_agent(tools=tools, llm=llm, agent="zero-shot-react-description", verbose=True)
 
 agent.invoke("give me a tweet about cristiano's failed saudi league career in dank humour")
