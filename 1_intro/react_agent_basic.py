@@ -3,29 +3,42 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_community.tools import TavilySearchResults
 from langchain.agents import initialize_agent
 
-# Load environment variables (like API keys)
+# Load .env file for API keys and configs
 load_dotenv()
 
-# Initialize the Gemini LLM
-llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0.7)
+# --- LLM Setup ---
+llm = ChatGoogleGenerativeAI(
+    model="gemini-1.5-flash",
+    temperature=0.7,
+    convert_system_message_to_human=True  # Optional, for better formatting
+)
 
-# Initialize the Tavily search tool
+# --- Tool Setup ---
 search_tool = TavilySearchResults(search_depth="basic")
-
-# Define tools to be used by the agent
 tools = [search_tool]
 
-# Initialize the agent
+# --- Agent Setup ---
 agent = initialize_agent(
     tools=tools,
     llm=llm,
     agent="zero-shot-react-description",
-    verbose=True
+    verbose=True,
+    handle_parsing_errors=True  # Safer prompt execution
 )
 
-# Run the prompt and print the result
+# --- Prompt Execution ---
+prompt = "give me a tweet about cristiano's failed saudi league career in dank humour"
+
 try:
-    response = agent.invoke("give me a tweet about cristiano's failed saudi league career in dank humour")
-    print("\nGenerated Tweet:\n", response)
+    result = agent.invoke(prompt)
+
+    # Print output neatly
+    if isinstance(result, str):
+        print("\n📝 Tweet Output:\n", result.strip())
+    elif isinstance(result, dict) and 'output' in result:
+        print("\n📝 Tweet Output:\n", result['output'].strip())
+    else:
+        print("\n⚠️ Unexpected response format:\n", result)
+
 except Exception as e:
-    print(f"Error: {e}")
+    print(f"\n❌ Error during execution:\n{str(e)}")
