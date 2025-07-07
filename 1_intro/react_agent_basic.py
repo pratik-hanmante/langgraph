@@ -26,7 +26,7 @@ agent = initialize_agent(
     handle_parsing_errors=True  # Safer prompt execution
 )
 
-# --- Prompt Execution ---
+# --- Prompt Execution
 prompt = "give me a tweet about cristiano's failed saudi league career in dank humour"
 
 try:
