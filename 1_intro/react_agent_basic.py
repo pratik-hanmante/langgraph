@@ -23,7 +23,7 @@ agent = initialize_agent(
     llm=llm,
     agent="zero-shot-react-description",
     verbose=True,
-    handle_parsing_errors=True  # Safer prompt execution
+    handle_parsing_errors=True 
 )
 
 # --- Prompt Execution
