@@ -27,7 +27,7 @@ agent = initialize_agent(
 )
 
 # --- Prompt Execution
-prompt = "give me a tweet about cristiano's failed saudi league career in dank humour"
+prompt = "give me a tweet about cristiano's failed saudi league career "
 
 try:
     result = agent.invoke(prompt)
